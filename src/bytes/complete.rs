@@ -458,7 +458,6 @@ where
 /// # #[macro_use] extern crate nom;
 /// # use nom::{Err, error::ErrorKind, Needed, IResult};
 /// # use nom::character::complete::digit1;
-/// use nom::bytes::complete::escaped;
 /// use nom::character::complete::one_of;
 ///
 /// fn esc(s: &str) -> IResult<&str, &str> {
@@ -590,12 +589,13 @@ where
 ///     alt((
 ///       value("\\", tag("\\")),
 ///       value("\"", tag("\"")),
-///       value("n", tag("\n")),
+///       value("\n", tag("n")),
 ///     ))
 ///   )(input)
 /// }
 ///
 /// assert_eq!(parser("ab\\\"cd"), Ok(("", String::from("ab\"cd"))));
+/// assert_eq!(parser("ab\\ncd"), Ok(("", String::from("ab\ncd"))));
 /// ```
 #[cfg(feature = "alloc")]
 #[cfg_attr(feature = "docsrs", doc(cfg(feature = "alloc")))]
